@@ -7,7 +7,7 @@ TEMPORAL=`mktemp`
 TOTAL=0
 
 function generar_lista_omitir {
-	echo ORA-00001 >> "$LISTAOMITIR"
+	echo "ORA-00001" >> "$LISTAOMITIR"
 	
 }
 
@@ -17,7 +17,7 @@ function generar_lista_ora {
 
 function resumen {
 	for linea in `cat "$1"`; do
-		if [ -z `grep $linea "$LISTAOMITIR"` ]; then
+		if [ -z "`grep $linea \"$LISTAOMITIR\"`" ]; then
 			CONT=`grep -c $linea "$2"`
 			TOTAL=$[ $TOTAL + $CONT ]
 			DESC=`grep $linea "$2"|head -1|cut -d: -f 2|xargs -0`
@@ -30,8 +30,9 @@ function resumen {
 generar_lista_ora "$LOG" "$LISTAORA"
 echo $LOG
 echo
-# |
 resumen "$LISTAORA" "$LOG" > "$TEMPORAL"
+echo "ERROR		CANT	MUESTRA"
+echo "==================================="
 sort -k2 -nr "$TEMPORAL"
 echo	
 echo "Total:		$TOTAL"
