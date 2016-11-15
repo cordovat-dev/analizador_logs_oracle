@@ -6,6 +6,11 @@ LISTAOMITIR=`mktemp`
 TEMPORAL=`mktemp`
 TOTAL=0
 
+if [ ! -f "$LOG" ];then
+	echo "No se encontro '$LOG' o no es un archivo"
+	exit 1 
+fi
+
 if [ -n "`which oerr`" ] && [ "$2" != "-m" ];then
 	OERR=1
 	ENCABEZADO="ERROR		CANT	DS_ERR"
